@@ -1,6 +1,7 @@
 const board = document.getElementById('board');
 const statusText = document.getElementById('statusText');
 const restartBtn = document.getElementById('restartBtn');
+const firstPlayerSelect = document.getElementById('firstPlayer');
 
 let currentPlayer = 'X';
 let gameState = ['', '', '', '', '', '', '', '', ''];
@@ -77,10 +78,10 @@ function checkWinner() {
 
 // Restart the game
 function restartGame() {
-    currentPlayer = 'X';
+    currentPlayer = firstPlayerSelect.value;
     gameState = ['', '', '', '', '', '', '', '', ''];
     gameActive = true;
-    statusText.textContent = `Player X's Turn`;
+    statusText.textContent = `Player ${currentPlayer}'s Turn`;
     document.querySelectorAll('.cell').forEach(cell => {
         cell.textContent = '';
         cell.classList.remove('taken');
@@ -89,4 +90,8 @@ function restartGame() {
 
 // Initialize the game
 restartBtn.addEventListener('click', restartGame);
+firstPlayerSelect.addEventListener('change', () => {
+    currentPlayer = firstPlayerSelect.value;
+    restartGame();
+});
 createBoard();
