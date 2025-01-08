@@ -7,32 +7,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <div class="signup">
-            <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
-            <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
-            <button id="startGameBtn">Start Game</button>
+    <div class="container">
+        <h1>Tic-Tac-Toe</h1>
+      
+        <div class="controls">
+            <label for="modeSelect">Select Mode: </label>
+            <select id="modeSelect">
+                <option value="player">Player vs Player</option>
+                <option value="ai">Player vs AI</option>
+            </select>
+            <label for="firstPlayer">First Player: </label>
+            <select id="firstPlayer">
+                <option value="X">Player X</option>
+                <option value="O">Player O</option>
+            </select>
         </div>
 
-        <div class="leaderboard">
-            <h2>Leaderboard</h2>
-            <div id="leaderboard">
-                <!-- Player scores will be dynamically displayed here -->
-            </div>
+        <div class="board" id="board">
+            <!-- Cells are dynamically created -->
         </div>
-        <div class="container">
-            <label for="firstPlayer">Select First Player: </label>
-            <select id="firstPlayer">
-                <option value="X" selected>X</option>
-                <option value="O">O</option>
-            </select>
-        </div>  
-        <div class="game">
-            <div class="board" id="board"></div>
-            <div class="status">
-                <p id="statusText"></p>
-                <button id="restartBtn">Restart</button>
-            </div>
+        
+        <div class="status">
+            <p id="statusText">Player X's Turn</p>
+            <button id="restartBtn">Restart</button>
         </div>
     </div>
     <script src="script.js"></script>
