@@ -70,4 +70,44 @@ h1 {
     margin-top: 20px;
     font-size: 1.5rem;
 }
+button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    font-size: 16px; /* Font size */
+    font-weight: bold;
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease-in-out; /* Smooth hover effect */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+button:active {
+    background-color: #3e8e41; /* Even darker green when clicked */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Adjust shadow on click */
+    transform: scale(0.95); /* Slight shrink effect */
+}
+
+button:disabled {
+    background-color: #cccccc; /* Grey background for disabled state */
+    color: #666666; /* Grey text */
+    cursor: not-allowed; /* Disabled cursor */
+    box-shadow: none; /* Remove shadow */
+}
+
+#restartBtn {
+    margin-top: 20px; /* Add spacing above the restart button */
+    display: none; /* Initially hidden */
+}
+
+#startGameBtn {
+    margin-top: 20px; /* Spacing for the start game button */
+}
+
 
