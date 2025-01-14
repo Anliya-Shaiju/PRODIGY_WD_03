@@ -1,16 +1,15 @@
 const board = document.getElementById('board');
 const statusText = document.getElementById('statusText');
-
+const restartBtn = document.getElementById('restartBtn');
 const startGameBtn = document.getElementById('startGameBtn');
 const playerModeSelect = document.getElementById('playerMode');
 const firstPlayerSelect = document.getElementById('firstPlayer');
-const computerScore = document.getElementById('computerScore');
-const playerScore = document.getElementById('playerScore');
-const draws = document.getElementById('draws');
+const cells = document.querySelectorAll(".cell");
 
 let currentPlayer = 'X';
 let gameState = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
+let playerMode = 'player'; // Default mode
 let aiEnabled = false;
 
 // Winning combinations
@@ -25,9 +24,21 @@ const winConditions = [
     [2, 4, 6],
 ];
 
-// Initialize the board
+// Start the game with settings
+startGameBtn.addEventListener('click', () => {
+    playerMode = playerModeSelect.value;
+    aiEnabled = playerMode === 'ai';
+    currentPlayer = firstPlayerSelect.value;
+
+    resetGame();
+    board.style.display = 'grid';
+    restartBtn.style.display = 'inline-block';
+    statusText.textContent = `Player ${currentPlayer}'s Turn`;
+});
+
+// Create the board
 function createBoard() {
-    board.innerHTML = '';
+    board.innerHTML = ''; // Clear any existing cells
     for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
@@ -36,32 +47,57 @@ function createBoard() {
         board.appendChild(cell);
     }
 }
+
+// Handle cell click
 function handleCellClick(event) {
+    if (!gameActive) return; // Disable clicks when game is over
+
     const cell = event.target;
     const index = cell.dataset.index;
 
-    if (gameState[index] !== '' || !gameActive) return;
+    if (gameState[index] !== '') return;
 
     gameState[index] = currentPlayer;
     cell.textContent = currentPlayer;
-
-    // Add class for styling (X or O)
-    cell.classList.add(currentPlayer.toLowerCase());
+    cell.classList.add(currentPlayer === 'X' ? 'x' : 'o');
 
     checkWinner();
 
     if (aiEnabled && gameActive && currentPlayer === 'O') {
         setTimeout(aiMove, 500);
+    } else if (gameActive) {
+        switchTurn();
     }
 }
 
-// Check for winner or draw
+// AI makes a move
+function aiMove() {
+    const emptyCells = gameState
+        .map((value, index) => (value === '' ? index : null))
+        .filter(index => index !== null);
+
+    if (emptyCells.length > 0) {
+        const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        gameState[randomIndex] = currentPlayer;
+        const cell = board.querySelector(`[data-index="${randomIndex}"]`);
+        cell.textContent = currentPlayer;
+        cell.classList.add('o');
+
+        checkWinner();
+    }
+}
+
+// Check for a winner or a draw
 function checkWinner() {
     let roundWon = false;
 
     for (let condition of winConditions) {
         const [a, b, c] = condition;
-        if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+        if (
+            gameState[a] &&
+            gameState[a] === gameState[b] &&
+            gameState[a] === gameState[c]
+        ) {
             roundWon = true;
             break;
         }
@@ -69,33 +105,32 @@ function checkWinner() {
 
     if (roundWon) {
         statusText.textContent = `Player ${currentPlayer} Wins!`;
-        if (currentPlayer === 'X') playerScore.textContent++;
-        else computerScore.textContent++;
-        gameActive = false;
+        gameActive = false; // Disable further moves
         return;
     }
 
     if (!gameState.includes('')) {
         statusText.textContent = `It's a Draw!`;
-        draws.textContent++;
-        gameActive = false;
+        gameActive = false; // Disable further moves
         return;
     }
+}
 
+// Switch turns
+function switchTurn() {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     statusText.textContent = `Player ${currentPlayer}'s Turn`;
 }
 
 // Restart the game
 function resetGame() {
+    currentPlayer = firstPlayerSelect.value;
     gameState = ['', '', '', '', '', '', '', '', ''];
     gameActive = true;
-    currentPlayer = firstPlayerSelect.value;
-    statusText.textContent = `Player ${currentPlayer}'s Turn`;
     createBoard();
+    statusText.textContent = `Player ${currentPlayer}'s Turn`;
 }
 
-// Event Listeners
-startGameBtn.addEventListener('click', resetGame);
-
+// Initialize the game
+restartBtn.addEventListener('click', resetGame);
 createBoard();
