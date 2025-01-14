@@ -1,7 +1,7 @@
 body {
-    font-family: "Comic Sans MS", sans-serif; /* Fun font style */
-    background: linear-gradient(135deg, #0f005b, #01022e); /* Blue gradient background */
-    color: #fff; /* White text */
+    font-family: "Comic Sans MS", sans-serif;
+    background: linear-gradient(135deg, #0f005b, #01022e);
+    color: #fff;
     margin: 0;
     height: 100vh;
     display: flex;
@@ -29,8 +29,9 @@ h1 {
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
     margin: 20px auto;
-    width: 315px; /* Total width matches cells + gaps */
-    height: 315px; /* Total height matches cells + gaps */
+    width: 310px; /* Adjusted for borders */
+    height: 310px;
+    background-color: transparent;
 }
 
 .cell {
@@ -44,12 +45,11 @@ h1 {
     font-size: 2.5rem;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
-    color: transparent; /* Default text hidden */
 }
 
 .cell:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Highlight on hover */
-    transform: scale(1.1); /* Slight zoom effect */
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .cell.taken {
@@ -66,11 +66,8 @@ h1 {
     text-shadow: 0px 0px 10px #00ffff;
 }
 
-.scoreboard {
+.status {
     margin-top: 20px;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: space-around;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    font-size: 1.5rem;
 }
 
